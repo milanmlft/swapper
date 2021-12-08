@@ -8,7 +8,7 @@ Authors@R:
            role = c("aut", "cre"),
            comment = c(ORCID = "0000-0001-9144-3701"))
 Description: Provides a simple simulation method for high-throughput data. The
-    core method consists of randomly scrambling features within on experimental
+    core method consists of randomly scrambling features within one experimental
     group. This approach retains the reference data characteristics without
     requiring extensive model fitting. 
 License: Artistic-2.0
@@ -18,3 +18,9 @@ biocViews: Software
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.1.2
+Imports: 
+    methods,
+    S4Vectors,
+    SummarizedExperiment
+Suggests: 
+    scuttle
