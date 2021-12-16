@@ -6,7 +6,7 @@
 \alias{swapper-package}
 \title{swapper: Simulate DE Signal By Feature Swapping}
 \description{
-Provides a simple simulation method for high-throughput data. The core method consists of randomly scrambling features within on experimental group. This approach retains the reference data characteristics without requiring extensive model fitting.
+Provides a simple simulation method for high-throughput data. The core method consists of randomly scrambling features within one experimental group. This approach retains the reference data characteristics without requiring extensive model fitting.
 }
 \seealso{
 Useful links:
