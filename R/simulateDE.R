@@ -53,9 +53,14 @@ NULL
 .simulate_DE <- function(x, groups, prop_DE = 0.01) {
     stopifnot(length(groups) == ncol(x))
 
+    if (prop_DE < 0 || prop_DE > 1) {
+        stop("`prop_DE` should be between 0 and 1.", call. = FALSE)
+    }
+
     # TODO: implement method for multiple groups
     if (length(unique(groups)) != 2) {
-        stop("Currently only supports simulating DE between 2 groups.")
+        stop("Currently only supports simulating DE between 2 groups.",
+            call. = FALSE)
     }
 
     sel_group <- sample(unique(groups), 1)
@@ -66,7 +71,8 @@ NULL
     if (n_DE < 2L) {
         stop("`prop_DE=", prop_DE, "` resulted in less than 2 DE genes.",
             "\nNeed at least 2 DE genes to do the swapping.",
-            " Consider increasing `prop_DE`.")
+            " Consider increasing `prop_DE`.",
+            call. = FALSE)
     }
     de_genes <- sample(n_rows, size = n_DE)
 
