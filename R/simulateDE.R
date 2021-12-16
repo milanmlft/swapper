@@ -38,6 +38,11 @@
 #' * `"swapped_gene"`: character vector indicating the original gene with which
 #' the gene was swapped
 #'
+#' The expected number of DE genes will be equal to `prop_DE * nrow(x)`. Note
+#' however that it's possible that the actual number might be 1 lower than this.
+#' This can happen when a single feature remains un-"swapped" without any other
+#' features left to swap it with.
+#'
 #' If `x` was a *SummarizedExperiment* object, the original `colData` and
 #' `rowData` are combined with these new columns.
 #'

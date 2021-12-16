@@ -42,6 +42,11 @@ following columns:
 the gene was swapped
 }
 
+The expected number of DE genes will be equal to \code{prop_DE * nrow(x)}. Note
+however that it's possible that the actual number might be 1 lower than this.
+This can happen when a single feature remains un-"swapped" without any other
+features left to swap it with.
+
 If \code{x} was a \emph{SummarizedExperiment} object, the original \code{colData} and
 \code{rowData} are combined with these new columns.
 }
