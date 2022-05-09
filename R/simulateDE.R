@@ -91,10 +91,11 @@ NULL
     row_data[de_genes, "is_DE"] <- scrambling$swapped
     row_data[["swapped_gene"]] <- rep(NA_character_, n_rows)
     row_data[de_genes, "swapped_gene"] <- rownames(x)[scrambling$rows]
+    rownames(row_data) <- rownames(sim_cnts)
 
     SummarizedExperiment(
         assays = list(counts = sim_cnts),
-        colData = DataFrame(sim_group = groups),
+        colData = DataFrame(sim_group = groups, row.names = colnames(sim_cnts)),
         rowData = row_data
     )
 }
