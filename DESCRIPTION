@@ -1,7 +1,7 @@
 Package: swapper
 Title: Simulate DE Signal By Feature Swapping
-Version: 0.99.0
-Date: 2021-12-03
+Version: 0.99.1
+Date: 2022-05-09
 Authors@R: 
     person(given = "Milan", family = "Malfait",
            email = "milan.malfait94@gmail.com",
