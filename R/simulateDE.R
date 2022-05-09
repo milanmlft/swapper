@@ -140,3 +140,13 @@ setMethod("simulateDE", "SummarizedExperiment",
         out
     }
 )
+
+#' @export
+#' @rdname simulateDE
+#' @importClassesFrom SingleCellExperiment SingleCellExperiment
+setMethod("simulateDE", "SingleCellExperiment",
+    function(x, groups, ...) {
+        out <- callNextMethod(x = x, groups = groups, ...)
+        as(out, "SingleCellExperiment")
+    }
+)

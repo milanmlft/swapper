@@ -21,6 +21,7 @@ RoxygenNote: 7.1.2
 Imports: 
     methods,
     S4Vectors,
+    SingleCellExperiment,
     SummarizedExperiment
 Suggests: 
     testthat (>= 3.0.0),

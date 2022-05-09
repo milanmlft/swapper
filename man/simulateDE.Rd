@@ -4,6 +4,7 @@
 \alias{simulateDE}
 \alias{simulateDE,ANY-method}
 \alias{simulateDE,SummarizedExperiment-method}
+\alias{simulateDE,SingleCellExperiment-method}
 \title{Simulate DE by swapping genes}
 \usage{
 simulateDE(x, groups, ...)
@@ -11,6 +12,8 @@ simulateDE(x, groups, ...)
 \S4method{simulateDE}{ANY}(x, groups, prop_DE = 0.01)
 
 \S4method{simulateDE}{SummarizedExperiment}(x, groups, ..., use_assay = "counts")
+
+\S4method{simulateDE}{SingleCellExperiment}(x, groups, ...)
 }
 \arguments{
 \item{x}{A numeric matrix containing features in rows and cells in columns.
