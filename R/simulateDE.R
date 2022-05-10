@@ -1,9 +1,9 @@
-#' Simulate DE by swapping genes
+#' Simulate DE by swapping features
 #'
 #' A simple DE simulator that takes a dataset with a grouping factor and induces
-#' DE by swapping some genes in one of the groups but not the other. This should
-#' ensure keeping the same data structure as the original data without having to
-#' estimate distribution parameters.
+#' DE by swapping some features in one of the groups but not the other. This
+#' should ensure keeping the same data structure as the original data without
+#' having to estimate distribution parameters.
 #'
 #' @details
 #' Note that for *SummarizedExperiment* objects, any additional assays
@@ -11,15 +11,15 @@
 #' library size-factor normalization, size factors for each cell will be
 #' identical before and after simulation. However, for more sophisticated
 #' methods, such as normalization by deconvolution, the size factors might
-#' differ due to the gene swapping.
+#' differ due to the feature swapping.
 #'
 #' @param x A numeric matrix containing features in rows and cells in columns.
 #'   Alternatively, a \linkS4class{SummarizedExperiment} or
 #'   \linkS4class{SingleCellExperiment} object.
 #' @param groups A vector of length equal to `ncol(x)` specifying the group to
 #'   which each cell is assigned. DE will be induced between these groups.
-#' @param prop_DE Numeric scalar specifying the proportion of genes that will be
-#'   simulated as DE. Default: `0.01`.
+#' @param prop_DE Numeric scalar specifying the proportion of features that will
+#'   be simulated as DE. Default: `0.01`.
 #' @param ... For the generic, arguments to be passed to specific methods.
 #'
 #'   For the `SummarizedExperiment` method, further arguments to be passed to
@@ -38,16 +38,17 @@
 #' in the `"sim_group"` column of the `colData`. The `rowData` contains the
 #' following columns:
 #'
-#' * `"is_DE"`: logical vector indicating the ground truth status of each gene
-#' * `"swapped_gene"`: character vector indicating the original gene with which
-#' the gene was swapped
+#' * `"is_DE"`: logical vector indicating the ground truth status of each
+#' feature
+#' * `"swapped_feature"`: character vector indicating the original feature with
+#' which the feature was swapped
 #' * `"swapped_group"`: character vector indicating the group (one of the
-#' provided `groups`) in which the gene was swapped
+#' provided `groups`) in which the feature was swapped
 #'
-#' Using the information from `"swapped_gene"` and `"swapped_group"` it should
-#' be possible to restore genes to their original counts.
+#' Using the information from `"swapped_feature"` and `"swapped_group"` it
+#' should be possible to restore features to their original counts.
 #'
-#' The expected number of DE genes will be equal to `prop_DE * nrow(x)`. Note
+#' The expected number of DE features will be equal to `prop_DE * nrow(x)`. Note
 #' however that it's possible that the actual number might be 1 lower than this.
 #' This can happen when a single feature remains un-"swapped" without any other
 #' features left to swap it with.
@@ -86,26 +87,26 @@ NULL
     n_rows <- nrow(x)
     n_DE <- round(prop_DE * n_rows)
     if (n_DE < 2L) {
-        stop("`prop_DE=", prop_DE, "` resulted in less than 2 DE genes.",
-            "\nNeed at least 2 DE genes to do the swapping.",
+        stop("`prop_DE=", prop_DE, "` resulted in less than 2 DE features.",
+            "\nNeed at least 2 DE features to do the swapping.",
             " Consider increasing `prop_DE`.",
             call. = FALSE)
     }
-    de_genes <- sample(n_rows, size = n_DE)
+    de_features <- sample(n_rows, size = n_DE)
 
-    ## Scramble genes only within the selected group
-    scrambling <- .scramble_rows(de_genes)
+    ## Scramble features only within the selected group
+    scrambling <- .scramble_rows(de_features)
     sim_cnts <- x
-    sim_cnts[de_genes, sel_group_idx] <- x[scrambling$rows, sel_group_idx]
+    sim_cnts[de_features, sel_group_idx] <- x[scrambling$rows, sel_group_idx]
 
-    ## It's possible that a single gene remains unswapped
+    ## It's possible that a single feature remains unswapped
     row_data <- DataFrame(is_DE = logical(n_rows))
-    row_data[de_genes, "is_DE"] <- scrambling$swapped
+    row_data[de_features, "is_DE"] <- scrambling$swapped
 
-    ## Record gene of origin and in which group it was swapped
-    row_data[["swapped_gene"]] <- rep(NA_character_, n_rows)
-    row_data[de_genes, "swapped_gene"] <- rownames(x)[scrambling$rows]
-    row_data[de_genes, "swapped_group"] <- sel_group
+    ## Record feature of origin and in which group it was swapped
+    row_data[["swapped_feature"]] <- rep(NA_character_, n_rows)
+    row_data[de_features, "swapped_feature"] <- rownames(x)[scrambling$rows]
+    row_data[de_features, "swapped_group"] <- sel_group
 
     rownames(row_data) <- rownames(sim_cnts)
 

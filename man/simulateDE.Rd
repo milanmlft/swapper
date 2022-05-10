@@ -5,7 +5,7 @@
 \alias{simulateDE,ANY-method}
 \alias{simulateDE,SummarizedExperiment-method}
 \alias{simulateDE,SingleCellExperiment-method}
-\title{Simulate DE by swapping genes}
+\title{Simulate DE by swapping features}
 \usage{
 simulateDE(x, groups, ...)
 
@@ -31,8 +31,8 @@ the \code{ANY} method.
 For the \code{SingleCellExperiment} method, further arguments to be passed to
 the \code{SummarizedExperiment} method.}
 
-\item{prop_DE}{Numeric scalar specifying the proportion of genes that will be
-simulated as DE. Default: \code{0.01}.}
+\item{prop_DE}{Numeric scalar specifying the proportion of features that will
+be simulated as DE. Default: \code{0.01}.}
 
 \item{use_assay}{A string or integer scalar specifying the assay of \code{x} to be
 used as input for the simulation. The default is to use \code{"counts"}.}
@@ -44,17 +44,18 @@ returned object. The \code{"groups"} used as input for the simulation are record
 in the \code{"sim_group"} column of the \code{colData}. The \code{rowData} contains the
 following columns:
 \itemize{
-\item \code{"is_DE"}: logical vector indicating the ground truth status of each gene
-\item \code{"swapped_gene"}: character vector indicating the original gene with which
-the gene was swapped
+\item \code{"is_DE"}: logical vector indicating the ground truth status of each
+feature
+\item \code{"swapped_feature"}: character vector indicating the original feature with
+which the feature was swapped
 \item \code{"swapped_group"}: character vector indicating the group (one of the
-provided \code{groups}) in which the gene was swapped
+provided \code{groups}) in which the feature was swapped
 }
 
-Using the information from \code{"swapped_gene"} and \code{"swapped_group"} it should
-be possible to restore genes to their original counts.
+Using the information from \code{"swapped_feature"} and \code{"swapped_group"} it
+should be possible to restore features to their original counts.
 
-The expected number of DE genes will be equal to \code{prop_DE * nrow(x)}. Note
+The expected number of DE features will be equal to \code{prop_DE * nrow(x)}. Note
 however that it's possible that the actual number might be 1 lower than this.
 This can happen when a single feature remains un-"swapped" without any other
 features left to swap it with.
@@ -67,9 +68,9 @@ If \code{x} was a \emph{SingleCellExperiment} object, the output will also be a
 }
 \description{
 A simple DE simulator that takes a dataset with a grouping factor and induces
-DE by swapping some genes in one of the groups but not the other. This should
-ensure keeping the same data structure as the original data without having to
-estimate distribution parameters.
+DE by swapping some features in one of the groups but not the other. This
+should ensure keeping the same data structure as the original data without
+having to estimate distribution parameters.
 }
 \details{
 Note that for \emph{SummarizedExperiment} objects, any additional assays
@@ -77,7 +78,7 @@ Note that for \emph{SummarizedExperiment} objects, any additional assays
 library size-factor normalization, size factors for each cell will be
 identical before and after simulation. However, for more sophisticated
 methods, such as normalization by deconvolution, the size factors might
-differ due to the gene swapping.
+differ due to the feature swapping.
 }
 \examples{
 example_sce <- scuttle::mockSCE()
