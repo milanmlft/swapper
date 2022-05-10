@@ -17,7 +17,8 @@ simulateDE(x, groups, ...)
 }
 \arguments{
 \item{x}{A numeric matrix containing features in rows and cells in columns.
-Alternatively, a \linkS4class{SummarizedExperiment} object.}
+Alternatively, a \linkS4class{SummarizedExperiment} or
+\linkS4class{SingleCellExperiment} object.}
 
 \item{groups}{A vector of length equal to \code{ncol(x)} specifying the group to
 which each cell is assigned. DE will be induced between these groups.}
@@ -25,7 +26,10 @@ which each cell is assigned. DE will be induced between these groups.}
 \item{...}{For the generic, arguments to be passed to specific methods.
 
 For the \code{SummarizedExperiment} method, further arguments to be passed to
-the \code{ANY} method.}
+the \code{ANY} method.
+
+For the \code{SingleCellExperiment} method, further arguments to be passed to
+the \code{SummarizedExperiment} method.}
 
 \item{prop_DE}{Numeric scalar specifying the proportion of genes that will be
 simulated as DE. Default: \code{0.01}.}
@@ -52,6 +56,9 @@ features left to swap it with.
 
 If \code{x} was a \emph{SummarizedExperiment} object, the original \code{colData} and
 \code{rowData} are combined with these new columns.
+
+If \code{x} was a \emph{SingleCellExperiment} object, the output will also be a
+\emph{SingleCellExperiment}.
 }
 \description{
 A simple DE simulator that takes a dataset with a grouping factor and induces

@@ -14,7 +14,8 @@
 #' differ due to the gene swapping.
 #'
 #' @param x A numeric matrix containing features in rows and cells in columns.
-#'   Alternatively, a \linkS4class{SummarizedExperiment} object.
+#'   Alternatively, a \linkS4class{SummarizedExperiment} or
+#'   \linkS4class{SingleCellExperiment} object.
 #' @param groups A vector of length equal to `ncol(x)` specifying the group to
 #'   which each cell is assigned. DE will be induced between these groups.
 #' @param prop_DE Numeric scalar specifying the proportion of genes that will be
@@ -23,7 +24,10 @@
 #'
 #'   For the `SummarizedExperiment` method, further arguments to be passed to
 #'   the `ANY` method.
-
+#'
+#'   For the `SingleCellExperiment` method, further arguments to be passed to
+#'   the `SummarizedExperiment` method.
+#'
 #' @param use_assay A string or integer scalar specifying the assay of `x` to be
 #'   used as input for the simulation. The default is to use `"counts"`.
 #'
@@ -45,6 +49,9 @@
 #'
 #' If `x` was a *SummarizedExperiment* object, the original `colData` and
 #' `rowData` are combined with these new columns.
+#'
+#' If `x` was a *SingleCellExperiment* object, the output will also be a
+#' *SingleCellExperiment*.
 #'
 #' @examples
 #' example_sce <- scuttle::mockSCE()
