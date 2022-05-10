@@ -47,7 +47,12 @@ following columns:
 \item \code{"is_DE"}: logical vector indicating the ground truth status of each gene
 \item \code{"swapped_gene"}: character vector indicating the original gene with which
 the gene was swapped
+\item \code{"swapped_group"}: character vector indicating the group (one of the
+provided \code{groups}) in which the gene was swapped
 }
+
+Using the information from \code{"swapped_gene"} and \code{"swapped_group"} it should
+be possible to restore genes to their original counts.
 
 The expected number of DE genes will be equal to \code{prop_DE * nrow(x)}. Note
 however that it's possible that the actual number might be 1 lower than this.

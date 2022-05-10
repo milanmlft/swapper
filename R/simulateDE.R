@@ -41,6 +41,11 @@
 #' * `"is_DE"`: logical vector indicating the ground truth status of each gene
 #' * `"swapped_gene"`: character vector indicating the original gene with which
 #' the gene was swapped
+#' * `"swapped_group"`: character vector indicating the group (one of the
+#' provided `groups`) in which the gene was swapped
+#'
+#' Using the information from `"swapped_gene"` and `"swapped_group"` it should
+#' be possible to restore genes to their original counts.
 #'
 #' The expected number of DE genes will be equal to `prop_DE * nrow(x)`. Note
 #' however that it's possible that the actual number might be 1 lower than this.
@@ -96,8 +101,12 @@ NULL
     ## It's possible that a single gene remains unswapped
     row_data <- DataFrame(is_DE = logical(n_rows))
     row_data[de_genes, "is_DE"] <- scrambling$swapped
+
+    ## Record gene of origin and in which group it was swapped
     row_data[["swapped_gene"]] <- rep(NA_character_, n_rows)
     row_data[de_genes, "swapped_gene"] <- rownames(x)[scrambling$rows]
+    row_data[de_genes, "swapped_group"] <- sel_group
+
     rownames(row_data) <- rownames(sim_cnts)
 
     SummarizedExperiment(
