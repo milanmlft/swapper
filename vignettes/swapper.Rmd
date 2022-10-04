@@ -1,0 +1,123 @@
+---
+title: "Introduction to swapper"
+author: 
+  - name: Milan Malfait
+    affiliation:
+    - Ghent University
+    email: milan.malfait94@gmail.com
+output: 
+  BiocStyle::html_document:
+    self_contained: yes
+    toc: true
+    toc_float: true
+    toc_depth: 2
+    code_folding: show
+date: "`r doc_date()`"
+package: "`r pkg_ver('swapper')`"
+vignette: >
+  %\VignetteIndexEntry{Introduction to swapper}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}  
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+    collapse = TRUE,
+    comment = "#>"
+)
+```
+
+# Introduction
+
+The __*swapper*__ package implements a simple DE simulator based on feature
+swapping.The essence of the method involves randomly scrambling a subset of
+features in one subgroup of the data. This effectively induces a DE signal for
+those scrambled genes, while retaining the characteristics of the original data
+set without having to rely on any modeling assumptions.
+
+
+# Quick start
+
+```{r "start", message=FALSE}
+library(swapper)
+```
+
+
+## Mock up a data set
+
+First we mock up a dataset.
+
+```{r sce}
+sce <- scuttle::mockSCE(ncells = 100, ngenes = 50)
+sce
+```
+
+This mock data set contains a `"Treatment"` variable, which is just a random partitioning of the cells in 2 groups.
+
+```{r}
+table(sce$Treatment)
+```
+
+## Simulate DE by swapping features
+
+Next we use __*swapper*__ to simulate de genes, using the `"treatment"` variable
+as the grouping factor. We induce DE in 10% of the original genes.
+
+```{r simulateDE}
+set.seed(123) # for reproducibility
+sim <- simulateDE(sce, groups = sce$Treatment, prop_DE = 0.1)
+rowData(sim)
+table(rowData(sim)$is_DE)
+```
+
+## Explore the simulated data
+
+From the `rowData` we can retrieve the true DE genes. The `rowData` also
+contains information regarding which gene was swapped with which and in which of
+the treatment groups.
+
+```{r trueDE_genes}
+(trueDE_genes <- rownames(sim)[rowData(sim)$is_DE])
+rowData(sim)[trueDE_genes, ]
+```
+
+We can visualize these and compare them to their original counts to see how the
+swapping works.
+
+```{r visualize, warning=FALSE, fig.width=9, fig.cap="Comparing expression values for the simulated DE genes between the original data (left) and simulated data (right)."}
+if (requireNamespace("scater", quietly = TRUE)) {
+    library(scater)
+    
+    ## Log-normalize counts for visualization
+    sce <- logNormCounts(sce)
+    sim <- logNormCounts(sim)
+    
+    p_orig <- plotExpression(
+        sce, features = trueDE_genes, x = "Treatment", colour_by = "Treatment"
+    ) + ggtitle("Original counts")
+    p_sim <- scater::plotExpression(
+        sim, features = trueDE_genes, x = "Treatment", colour_by = "Treatment"
+    ) + ggtitle("Simulated counts")
+    gridExtra::grid.arrange(p_orig, p_sim, ncol = 2)
+}
+```
+
+From this plot and the `rowData` shown above, we can see that the counts for
+e.g. `Gene_0003` in the `treat1` group of the simulated data originated from the
+`treat1` counts for `Gene_0014` in the original data. Likewise, the simulated
+`treat1` counts for `Gene_0014` are the original `treat1` counts for
+`Gene_0042`. So we effectively induced DE by selectively swapping out counts in
+one, but not the other, treatment group.
+
+
+# Session Info {-}
+
+<details><summary>Session info</summary>
+
+```{r session_info, echo=FALSE}
+## session info
+options(width = 120)
+sessioninfo::session_info()
+```
+
+</details>

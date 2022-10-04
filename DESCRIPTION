@@ -26,5 +26,12 @@ Imports:
 Suggests: 
     testthat (>= 3.0.0),
     scuttle,
-    withr
+    withr,
+    knitr,
+    BiocStyle,
+    sessioninfo,
+    rmarkdown,
+    scater,
+    gridExtra
 Config/testthat/edition: 3
+VignetteBuilder: knitr
