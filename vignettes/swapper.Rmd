@@ -60,12 +60,15 @@ table(sce$Treatment)
 
 ## Simulate DE by swapping features
 
-Next we use __*swapper*__ to simulate de genes, using the `"treatment"` variable
-as the grouping factor. We induce DE in 10% of the original genes.
+Next we use __*swapper*__ to simulate DE genes, using the `"Treatment"` variable
+as the grouping factor. We induce DE in 10% of the original genes for cells
+belonging to the `"treat1"` group.
 
 ```{r simulateDE}
 set.seed(123) # for reproducibility
-sim <- simulateDE(sce, groups = sce$Treatment, prop_DE = 0.1)
+
+cells_to_swap <- sce$Treatment == "treat1"
+sim <- simulateDE(sce, which_cols = cells_to_swap, prop_DE = 0.1)
 rowData(sim)
 table(rowData(sim)$is_DE)
 ```
@@ -73,12 +76,18 @@ table(rowData(sim)$is_DE)
 ## Explore the simulated data
 
 From the `rowData` we can retrieve the true DE genes. The `rowData` also
-contains information regarding which gene was swapped with which and in which of
-the treatment groups.
+contains information regarding which gene was swapped with which.
 
 ```{r trueDE_genes}
 (trueDE_genes <- rownames(sim)[rowData(sim)$is_DE])
 rowData(sim)[trueDE_genes, ]
+```
+
+The `"sim_group"` column in the `colData` indicates for which cells the swapping occurred. In this example, this should be equivalent to the `"Treatment"` grouping.
+
+```{r}
+colData(sim)
+table(sim$Treatment, sim$sim_group)
 ```
 
 We can visualize these and compare them to their original counts to see how the
@@ -95,9 +104,11 @@ if (requireNamespace("scater", quietly = TRUE)) {
     p_orig <- plotExpression(
         sce, features = trueDE_genes, x = "Treatment", colour_by = "Treatment"
     ) + ggtitle("Original counts")
+    
     p_sim <- scater::plotExpression(
         sim, features = trueDE_genes, x = "Treatment", colour_by = "Treatment"
     ) + ggtitle("Simulated counts")
+    
     gridExtra::grid.arrange(p_orig, p_sim, ncol = 2)
 }
 ```
