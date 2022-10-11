@@ -17,6 +17,7 @@ knitr::opts_chunk$set(
 
 <!-- badges: start -->
 [![R-CMD-check](https://github.com/milanmlft/swapper/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/milanmlft/swapper/actions/workflows/R-CMD-check.yaml)
+[![Codecov test coverage](https://codecov.io/gh/milanmlft/swapper/branch/master/graph/badge.svg)](https://app.codecov.io/gh/milanmlft/swapper?branch=master)
 <!-- badges: end -->
 
 ## Installation
