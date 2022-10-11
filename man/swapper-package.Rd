@@ -12,6 +12,7 @@ Provides a simple simulation method for high-throughput data. The core method co
 Useful links:
 \itemize{
   \item \url{https://github.com/milanmlft/swapper}
+  \item \url{https://milanmlft.github.io/swapper/}
   \item Report bugs at \url{https://github.com/milanmlft/swapper/issues}
 }
 
