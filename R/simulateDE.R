@@ -12,12 +12,18 @@
 #' identical before and after simulation. However, for more sophisticated
 #' methods, such as normalization by deconvolution, the size factors might
 #' differ due to the feature swapping.
+
+#' The expected number of DE features will be equal to `prop_DE * nrow(x)`. Note
+#' however that it's possible that the actual number might be 1 lower than this.
+#' This can happen when a single feature remains un-"swapped" without any other
+#' features left to swap it with.
 #'
 #' @param x A numeric matrix containing features in rows and cells in columns.
 #'   Alternatively, a \linkS4class{SummarizedExperiment} or
 #'   \linkS4class{SingleCellExperiment} object.
-#' @param groups A vector of length equal to `ncol(x)` specifying the group to
-#'   which each cell is assigned. DE will be induced between these groups.
+#' @param which_cols Character, numeric or logical vector specifying for which
+#'   columns (cells, samples, ...) of `x` the feature swapping should occur.
+#'   Usually, this will be a random subset of columns belonging to a mock group.
 #' @param prop_DE Numeric scalar specifying the proportion of features that will
 #'   be simulated as DE. Default: `0.01`.
 #' @param ... For the generic, arguments to be passed to specific methods.
@@ -34,24 +40,15 @@
 #' @return
 #' A \linkS4class{SummarizedExperiment} object with DE induced between the
 #' specified `groups`. The simulated counts are in the `"counts"` assay of the
-#' returned object. The `"groups"` used as input for the simulation are recorded
-#' in the `"sim_group"` column of the `colData`. The `rowData` contains the
+#' returned object. The `"sim_group"` column of the `colData` indicates whether
+#' swapping was performed in that column (specified by the `which_cols`
+#' argument). The `rowData` contains the
 #' following columns:
 #'
 #' * `"is_DE"`: logical vector indicating the ground truth status of each
 #' feature
 #' * `"swapped_feature"`: character vector indicating the original feature with
 #' which the feature was swapped
-#' * `"swapped_group"`: character vector indicating the group (one of the
-#' provided `groups`) in which the feature was swapped
-#'
-#' Using the information from `"swapped_feature"` and `"swapped_group"` it
-#' should be possible to restore features to their original counts.
-#'
-#' The expected number of DE features will be equal to `prop_DE * nrow(x)`. Note
-#' however that it's possible that the actual number might be 1 lower than this.
-#' This can happen when a single feature remains un-"swapped" without any other
-#' features left to swap it with.
 #'
 #' If `x` was a *SummarizedExperiment* object, the original `colData` and
 #' `rowData` are combined with these new columns.
@@ -61,28 +58,21 @@
 #'
 #' @examples
 #' example_sce <- scuttle::mockSCE()
-#' sim <- simulateDE(example_sce, groups = example_sce$Treatment, prop_DE = 0.1)
+#'
+#' ## Swap features in one of the "treat1" group
+#' cells_to_swap <- example_sce$Treatment == "treat1"
+#'
+#' sim <- simulateDE(example_sce, which_cols = cells_to_swap, prop_DE = 0.1)
 #' sim
 #'
 #' @author Milan Malfait
 #' @name simulateDE
 NULL
 
-.simulate_DE <- function(x, groups, prop_DE = 0.01) {
-    stopifnot(length(groups) == ncol(x))
-
+.simulate_DE <- function(x, which_cols, prop_DE = 0.01) {
     if (prop_DE < 0 || prop_DE > 1) {
         stop("`prop_DE` should be between 0 and 1.", call. = FALSE)
     }
-
-    # TODO: implement method for multiple groups
-    if (length(unique(groups)) != 2) {
-        stop("Currently only supports simulating DE between 2 groups.",
-            call. = FALSE)
-    }
-
-    sel_group <- sample(unique(groups), 1)
-    sel_group_idx <- which(groups == sel_group)
 
     n_rows <- nrow(x)
     n_DE <- round(prop_DE * n_rows)
@@ -97,7 +87,7 @@ NULL
     ## Scramble features only within the selected group
     scrambling <- .scramble_rows(de_features)
     sim_cnts <- x
-    sim_cnts[de_features, sel_group_idx] <- x[scrambling$rows, sel_group_idx]
+    sim_cnts[de_features, which_cols] <- x[scrambling$rows, which_cols]
 
     ## It's possible that a single feature remains unswapped
     row_data <- DataFrame(is_DE = logical(n_rows))
@@ -106,13 +96,16 @@ NULL
     ## Record feature of origin and in which group it was swapped
     row_data[["swapped_feature"]] <- rep(NA_character_, n_rows)
     row_data[de_features, "swapped_feature"] <- rownames(x)[scrambling$rows]
-    row_data[de_features, "swapped_group"] <- sel_group
-
     rownames(row_data) <- rownames(sim_cnts)
+
+    swapped_cols <- colnames(x[, which_cols, drop = FALSE])
 
     SummarizedExperiment(
         assays = list(counts = sim_cnts),
-        colData = DataFrame(sim_group = groups, row.names = colnames(sim_cnts)),
+        colData = DataFrame(
+            sim_group = colnames(x) %in% swapped_cols,
+            row.names = colnames(sim_cnts)
+        ),
         rowData = row_data
     )
 }
@@ -139,7 +132,7 @@ NULL
 
 #' @export
 #' @rdname simulateDE
-setGeneric("simulateDE", function(x, groups, ...) standardGeneric("simulateDE"))
+setGeneric("simulateDE", function(x, which_cols, ...) standardGeneric("simulateDE"))
 
 #' @export
 #' @rdname simulateDE
@@ -148,8 +141,8 @@ setMethod("simulateDE", "ANY", .simulate_DE)
 #' @export
 #' @rdname simulateDE
 setMethod("simulateDE", "SummarizedExperiment",
-    function(x, groups, ..., use_assay = "counts") {
-        out <- .simulate_DE(assay(x, use_assay), groups = groups, ...)
+    function(x, which_cols, ..., use_assay = "counts") {
+        out <- .simulate_DE(assay(x, use_assay), which_cols = which_cols, ...)
 
         ## Combine row and col data
         rowData(out) <- cbind(rowData(x), rowData(out))
@@ -162,8 +155,8 @@ setMethod("simulateDE", "SummarizedExperiment",
 #' @rdname simulateDE
 #' @importClassesFrom SingleCellExperiment SingleCellExperiment
 setMethod("simulateDE", "SingleCellExperiment",
-    function(x, groups, ...) {
-        out <- callNextMethod(x = x, groups = groups, ...)
+    function(x, which_cols, ...) {
+        out <- callNextMethod(x = x, which_cols = which_cols, ...)
         as(out, "SingleCellExperiment")
     }
 )

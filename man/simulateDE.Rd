@@ -7,21 +7,22 @@
 \alias{simulateDE,SingleCellExperiment-method}
 \title{Simulate DE by swapping features}
 \usage{
-simulateDE(x, groups, ...)
+simulateDE(x, which_cols, ...)
 
-\S4method{simulateDE}{ANY}(x, groups, prop_DE = 0.01)
+\S4method{simulateDE}{ANY}(x, which_cols, prop_DE = 0.01)
 
-\S4method{simulateDE}{SummarizedExperiment}(x, groups, ..., use_assay = "counts")
+\S4method{simulateDE}{SummarizedExperiment}(x, which_cols, ..., use_assay = "counts")
 
-\S4method{simulateDE}{SingleCellExperiment}(x, groups, ...)
+\S4method{simulateDE}{SingleCellExperiment}(x, which_cols, ...)
 }
 \arguments{
 \item{x}{A numeric matrix containing features in rows and cells in columns.
 Alternatively, a \linkS4class{SummarizedExperiment} or
 \linkS4class{SingleCellExperiment} object.}
 
-\item{groups}{A vector of length equal to \code{ncol(x)} specifying the group to
-which each cell is assigned. DE will be induced between these groups.}
+\item{which_cols}{Character, numeric or logical vector specifying for which
+columns (cells, samples, ...) of \code{x} the feature swapping should occur.
+Usually, this will be a random subset of columns belonging to a mock group.}
 
 \item{...}{For the generic, arguments to be passed to specific methods.
 
@@ -40,25 +41,16 @@ used as input for the simulation. The default is to use \code{"counts"}.}
 \value{
 A \linkS4class{SummarizedExperiment} object with DE induced between the
 specified \code{groups}. The simulated counts are in the \code{"counts"} assay of the
-returned object. The \code{"groups"} used as input for the simulation are recorded
-in the \code{"sim_group"} column of the \code{colData}. The \code{rowData} contains the
+returned object. The \code{"sim_group"} column of the \code{colData} indicates whether
+swapping was performed in that column (specified by the \code{which_cols}
+argument). The \code{rowData} contains the
 following columns:
 \itemize{
 \item \code{"is_DE"}: logical vector indicating the ground truth status of each
 feature
 \item \code{"swapped_feature"}: character vector indicating the original feature with
 which the feature was swapped
-\item \code{"swapped_group"}: character vector indicating the group (one of the
-provided \code{groups}) in which the feature was swapped
 }
-
-Using the information from \code{"swapped_feature"} and \code{"swapped_group"} it
-should be possible to restore features to their original counts.
-
-The expected number of DE features will be equal to \code{prop_DE * nrow(x)}. Note
-however that it's possible that the actual number might be 1 lower than this.
-This can happen when a single feature remains un-"swapped" without any other
-features left to swap it with.
 
 If \code{x} was a \emph{SummarizedExperiment} object, the original \code{colData} and
 \code{rowData} are combined with these new columns.
@@ -79,10 +71,18 @@ library size-factor normalization, size factors for each cell will be
 identical before and after simulation. However, for more sophisticated
 methods, such as normalization by deconvolution, the size factors might
 differ due to the feature swapping.
+The expected number of DE features will be equal to \code{prop_DE * nrow(x)}. Note
+however that it's possible that the actual number might be 1 lower than this.
+This can happen when a single feature remains un-"swapped" without any other
+features left to swap it with.
 }
 \examples{
 example_sce <- scuttle::mockSCE()
-sim <- simulateDE(example_sce, groups = example_sce$Treatment, prop_DE = 0.1)
+
+## Swap features in one of the "treat1" group
+cells_to_swap <- example_sce$Treatment == "treat1"
+
+sim <- simulateDE(example_sce, which_cols = cells_to_swap, prop_DE = 0.1)
 sim
 
 }
