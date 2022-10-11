@@ -59,7 +59,7 @@
 #' @examples
 #' example_sce <- scuttle::mockSCE()
 #'
-#' ## Swap features in one of the "treat1" group
+#' ## Swap features in the "treat1" group
 #' cells_to_swap <- example_sce$Treatment == "treat1"
 #'
 #' sim <- simulateDE(example_sce, which_cols = cells_to_swap, prop_DE = 0.1)
