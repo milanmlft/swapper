@@ -12,8 +12,8 @@ Description: Provides a simple simulation method for high-throughput data. The
     group. This approach retains the reference data characteristics without
     requiring extensive model fitting. 
 License: Artistic-2.0
-URL: 
-BugReports:
+URL: https://github.com/milanmlft/swapper
+BugReports: https://github.com/milanmlft/swapper/issues
 biocViews: Software
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
