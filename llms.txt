@@ -1,0 +1,25 @@
+# swapper
+
+## Installation
+
+You can install the development version of swapper from
+[GitHub](https://github.com/milanmlft/swapper) with:
+
+``` r
+# install.packages("devtools")
+devtools::install_github("milanmlft/swapper")
+```
+
+# Package index
+
+## All functions
+
+- [`simulateDE()`](https://milanmlft.github.io/swapper/reference/simulateDE.md)
+  : Simulate DE by swapping features
+
+# Articles
+
+### All vignettes
+
+- [Introduction to
+  swapper](https://milanmlft.github.io/swapper/articles/swapper.md):
