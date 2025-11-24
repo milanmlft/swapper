@@ -8,7 +8,7 @@
 ## Citation
 
 Source:
-[`DESCRIPTION`](https://github.com/milanmlft/swapper/blob/master/DESCRIPTION)
+[`DESCRIPTION`](https://github.com/milanmlft/swapper/blob/main/DESCRIPTION)
 
 Malfait M (2025). *swapper: Simulate DE Signal By Feature Swapping*. R
 package version 0.99.2, <https://github.com/milanmlft/swapper>.

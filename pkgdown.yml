@@ -3,7 +3,7 @@ pkgdown: 2.2.0
 pkgdown_sha: ~
 articles:
   swapper: swapper.html
-last_built: 2025-11-24T12:31Z
+last_built: 2025-11-24T12:33Z
 urls:
   reference: https://milanmlft.github.io/swapper/reference
   article: https://milanmlft.github.io/swapper/articles
