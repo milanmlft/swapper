@@ -13,6 +13,8 @@ modeling assumptions.
 
 ``` r
 library(swapper)
+#> Warning: replacing previous import 'S4Arrays::makeNindexFromArrayViewport' by
+#> 'DelayedArray::makeNindexFromArrayViewport' when loading 'SummarizedExperiment'
 ```
 
 ### Mock up a data set
@@ -176,7 +178,7 @@ Session info
     #>  collate  C.UTF-8
     #>  ctype    C.UTF-8
     #>  tz       UTC
-    #>  date     2025-11-24
+    #>  date     2025-12-10
     #>  pandoc   3.1.11 @ /opt/hostedtoolcache/pandoc/3.1.11/x64/ (via rmarkdown)
     #>  quarto   NA
     #> 
@@ -192,7 +194,7 @@ Session info
     #>  BiocParallel           1.44.0  2025-10-29 [1] Bioconduc~
     #>  BiocSingular           1.26.1  2025-11-17 [1] Bioconduc~
     #>  BiocStyle            * 2.38.0  2025-10-29 [1] Bioconduc~
-    #>  bookdown               0.45    2025-10-03 [1] RSPM
+    #>  bookdown               0.46    2025-12-05 [1] RSPM
     #>  bslib                  0.9.0   2025-01-30 [1] RSPM
     #>  cachem                 1.1.0   2024-05-16 [1] RSPM
     #>  cli                    3.6.5   2025-04-23 [1] RSPM
@@ -206,13 +208,13 @@ Session info
     #>  fs                     1.6.6   2025-04-12 [1] RSPM
     #>  generics             * 0.1.4   2025-05-09 [1] RSPM
     #>  GenomicRanges        * 1.62.0  2025-10-29 [1] Bioconduc~
-    #>  ggbeeswarm             0.7.2   2023-04-29 [1] RSPM
+    #>  ggbeeswarm             0.7.3   2025-11-29 [1] RSPM
     #>  ggplot2              * 4.0.1   2025-11-14 [1] RSPM
     #>  ggrepel                0.9.6   2024-09-07 [1] RSPM
     #>  glue                   1.8.0   2024-09-30 [1] RSPM
     #>  gridExtra              2.3     2017-09-09 [1] RSPM
     #>  gtable                 0.3.6   2024-10-25 [1] RSPM
-    #>  htmltools              0.5.8.1 2024-04-04 [1] RSPM
+    #>  htmltools              0.5.9   2025-12-04 [1] RSPM
     #>  IRanges              * 2.44.0  2025-10-29 [1] Bioconduc~
     #>  irlba                  2.3.5.1 2022-10-03 [1] RSPM
     #>  jquerylib              0.1.4   2021-04-26 [1] RSPM
@@ -232,7 +234,7 @@ Session info
     #>  rlang                  1.1.6   2025-04-11 [1] RSPM
     #>  rmarkdown              2.30    2025-09-28 [1] RSPM
     #>  rsvd                   1.0.5   2021-04-16 [1] RSPM
-    #>  S4Arrays               1.10.0  2025-10-29 [1] Bioconduc~
+    #>  S4Arrays               1.10.1  2025-12-01 [1] Bioconduc~
     #>  S4Vectors            * 0.48.0  2025-10-29 [1] Bioconduc~
     #>  S7                     0.2.1   2025-11-14 [1] RSPM
     #>  sass                   0.4.10  2025-04-11 [1] RSPM
@@ -243,9 +245,9 @@ Session info
     #>  Seqinfo              * 1.0.0   2025-10-29 [1] Bioconduc~
     #>  sessioninfo            1.2.3   2025-02-05 [1] RSPM
     #>  SingleCellExperiment * 1.32.0  2025-10-29 [1] Bioconduc~
-    #>  SparseArray            1.10.2  2025-11-17 [1] Bioconduc~
+    #>  SparseArray            1.10.6  2025-12-04 [1] Bioconduc~
     #>  SummarizedExperiment * 1.40.0  2025-10-29 [1] Bioconduc~
-    #>  swapper              * 0.99.2  2025-11-24 [1] local
+    #>  swapper              * 0.99.2  2025-12-10 [1] local
     #>  systemfonts            1.3.1   2025-10-01 [1] RSPM
     #>  textshaping            1.0.4   2025-10-10 [1] RSPM
     #>  vctrs                  0.6.5   2023-12-01 [1] RSPM
@@ -255,7 +257,7 @@ Session info
     #>  withr                  3.0.2   2024-10-28 [1] RSPM
     #>  xfun                   0.54    2025-10-30 [1] RSPM
     #>  XVector                0.50.0  2025-10-29 [1] Bioconduc~
-    #>  yaml                   2.3.10  2024-07-26 [1] RSPM
+    #>  yaml                   2.3.11  2025-11-28 [1] RSPM
     #> 
     #>  [1] /home/runner/work/_temp/Library
     #>  [2] /opt/R/4.5.2/lib/R/site-library
