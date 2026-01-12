@@ -178,7 +178,7 @@ Session info
     #>  collate  C.UTF-8
     #>  ctype    C.UTF-8
     #>  tz       UTC
-    #>  date     2025-12-10
+    #>  date     2026-01-12
     #>  pandoc   3.1.11 @ /opt/hostedtoolcache/pandoc/3.1.11/x64/ (via rmarkdown)
     #>  quarto   NA
     #> 
@@ -207,7 +207,7 @@ Session info
     #>  fastmap                1.2.0   2024-05-15 [1] RSPM
     #>  fs                     1.6.6   2025-04-12 [1] RSPM
     #>  generics             * 0.1.4   2025-05-09 [1] RSPM
-    #>  GenomicRanges        * 1.62.0  2025-10-29 [1] Bioconduc~
+    #>  GenomicRanges        * 1.62.1  2025-12-08 [1] Bioconduc~
     #>  ggbeeswarm             0.7.3   2025-11-29 [1] RSPM
     #>  ggplot2              * 4.0.1   2025-11-14 [1] RSPM
     #>  ggrepel                0.9.6   2024-09-07 [1] RSPM
@@ -219,10 +219,10 @@ Session info
     #>  irlba                  2.3.5.1 2022-10-03 [1] RSPM
     #>  jquerylib              0.1.4   2021-04-26 [1] RSPM
     #>  jsonlite               2.0.0   2025-03-27 [1] RSPM
-    #>  knitr                  1.50    2025-03-16 [1] RSPM
+    #>  knitr                  1.51    2025-12-20 [1] RSPM
     #>  labeling               0.4.3   2023-08-29 [1] RSPM
     #>  lattice                0.22-7  2025-04-02 [3] CRAN (R 4.5.2)
-    #>  lifecycle              1.0.4   2023-11-07 [1] RSPM
+    #>  lifecycle              1.0.5   2026-01-08 [1] RSPM
     #>  Matrix                 1.7-4   2025-08-28 [3] CRAN (R 4.5.2)
     #>  MatrixGenerics       * 1.22.0  2025-10-29 [1] Bioconduc~
     #>  matrixStats          * 1.5.0   2025-01-07 [1] RSPM
@@ -230,8 +230,8 @@ Session info
     #>  R6                     2.6.1   2025-02-15 [1] RSPM
     #>  ragg                   1.5.0   2025-09-02 [1] RSPM
     #>  RColorBrewer           1.1-3   2022-04-03 [1] RSPM
-    #>  Rcpp                   1.1.0   2025-07-02 [1] RSPM
-    #>  rlang                  1.1.6   2025-04-11 [1] RSPM
+    #>  Rcpp                   1.1.1   2026-01-10 [1] RSPM
+    #>  rlang                  1.1.7   2026-01-09 [1] RSPM
     #>  rmarkdown              2.30    2025-09-28 [1] RSPM
     #>  rsvd                   1.0.5   2021-04-16 [1] RSPM
     #>  S4Arrays               1.10.1  2025-12-01 [1] Bioconduc~
@@ -245,9 +245,9 @@ Session info
     #>  Seqinfo              * 1.0.0   2025-10-29 [1] Bioconduc~
     #>  sessioninfo            1.2.3   2025-02-05 [1] RSPM
     #>  SingleCellExperiment * 1.32.0  2025-10-29 [1] Bioconduc~
-    #>  SparseArray            1.10.6  2025-12-04 [1] Bioconduc~
+    #>  SparseArray            1.10.8  2025-12-18 [1] Bioconduc~
     #>  SummarizedExperiment * 1.40.0  2025-10-29 [1] Bioconduc~
-    #>  swapper              * 0.99.2  2025-12-10 [1] local
+    #>  swapper              * 0.99.2  2026-01-12 [1] local
     #>  systemfonts            1.3.1   2025-10-01 [1] RSPM
     #>  textshaping            1.0.4   2025-10-10 [1] RSPM
     #>  vctrs                  0.6.5   2023-12-01 [1] RSPM
@@ -255,9 +255,9 @@ Session info
     #>  viridis                0.6.5   2024-01-29 [1] RSPM
     #>  viridisLite            0.4.2   2023-05-02 [1] RSPM
     #>  withr                  3.0.2   2024-10-28 [1] RSPM
-    #>  xfun                   0.54    2025-10-30 [1] RSPM
+    #>  xfun                   0.55    2025-12-16 [1] RSPM
     #>  XVector                0.50.0  2025-10-29 [1] Bioconduc~
-    #>  yaml                   2.3.11  2025-11-28 [1] RSPM
+    #>  yaml                   2.3.12  2025-12-10 [1] RSPM
     #> 
     #>  [1] /home/runner/work/_temp/Library
     #>  [2] /opt/R/4.5.2/lib/R/site-library

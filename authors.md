@@ -10,13 +10,13 @@
 Source:
 [`DESCRIPTION`](https://github.com/milanmlft/swapper/blob/main/DESCRIPTION)
 
-Malfait M (2025). *swapper: Simulate DE Signal By Feature Swapping*. R
+Malfait M (2026). *swapper: Simulate DE Signal By Feature Swapping*. R
 package version 0.99.2, <https://github.com/milanmlft/swapper>.
 
     @Manual{,
       title = {swapper: Simulate DE Signal By Feature Swapping},
       author = {Milan Malfait},
-      year = {2025},
+      year = {2026},
       note = {R package version 0.99.2},
       url = {https://github.com/milanmlft/swapper},
     }
